@@ -12,22 +12,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import bitcamp.pms.dao.MemberDao;
-import bitcamp.pms.domain.Member;
+
 
 
 @SuppressWarnings("serial")
 @WebServlet("/member/update")
-public class MemberUpdateServlet extends HttpServlet {
+public class MemberUpdateServlet extends HttpServlet{
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
-        
-        
-        String id = request.getParameter("id");
-        String email =request.getParameter("email");
-        String password = request.getParameter("password");
-        
+      
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         
@@ -43,19 +37,24 @@ public class MemberUpdateServlet extends HttpServlet {
         
         try {
             
-            Member member = new Member();
-            member.setId(request.getParameter("id"));
-            member.setEmail(request.getParameter("email"));
-            member.setPassword(request.getParameter("password"));
-           
-            MemberDao memberDao = (MemberDao) getServletContext().getAttribute("memberDao");
-                if (memberDao.update(member) == 0) {
+            Class.forName("com.mysql.jdbc.Driver");
+            try (
+                Connection con = DriverManager.getConnection(
+                        "jdbc:mysql://13.209.76.8:3306/studydb",
+                        "study", "1111");
+                PreparedStatement stmt = con.prepareStatement(
+                    "update pms2_member set email=?, pwd=password(?) where mid=?");) {
+                
+                stmt.setString(1, request.getParameter("email"));
+                stmt.setString(2, request.getParameter("password"));
+                stmt.setString(3, request.getParameter("id"));
+                stmt.executeUpdate();
+                if ( stmt.executeUpdate()== 0) {
                     out.println("<p>해당 회원이 존재하지 않습니다.</p>");
                 } else {
                     out.println("<p>변경하였습니다.</p>");
                 }
-            
-            
+            }
             
         } catch (Exception e) {
             out.println("<p>변경 실패!</p>");
@@ -65,6 +64,4 @@ public class MemberUpdateServlet extends HttpServlet {
         out.println("</html>");
     }
     
-    
-     
 }

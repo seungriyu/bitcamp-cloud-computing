@@ -2,6 +2,10 @@ package bitcamp.pms.servlet.member;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,9 +13,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import bitcamp.pms.dao.MemberDao;
-import bitcamp.pms.domain.Member;
-
+import com.mysql.fabric.xmlrpc.base.Member;
+import com.sun.tools.internal.xjc.reader.xmlschema.bindinfo.BIConversion.Static;
 
 @SuppressWarnings("serial")
 @WebServlet("/member/add")
@@ -20,9 +23,9 @@ public class MemberAddServlet extends HttpServlet{
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         
         request.setCharacterEncoding("UTF-8");
-
+        
        
-          
+
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         
@@ -38,16 +41,20 @@ public class MemberAddServlet extends HttpServlet{
         out.println("<h1>회원 등록 결과</h1>");
         
         try {
-            //////////////////////////////////////
-            
-            MemberDao memberDao = (MemberDao) getServletContext().getAttribute("memberDao");
-            
-            Member member = new Member();
-            member.setId( request.getParameter("id"));
-            member.setEmail(request.getParameter("email"));
-            member.setPassword(request.getParameter("password"));
-            memberDao.insert(member);
-            
+            Class.forName("com.mysql.jdbc.Driver");
+            try (
+                Connection con = DriverManager.getConnection(
+                        "jdbc:mysql://13.209.76.8:3306/studydb",
+                        "study", "1111");
+                PreparedStatement stmt = con.prepareStatement(
+                    "insert into pms2_member(mid,email,pwd) values(?,?,password(?))");) {
+                
+                stmt.setString(1, request.getParameter("id"));
+                stmt.setString(2, request.getParameter("email"));
+                stmt.setString(3, request.getParameter("password"));
+                stmt.execute();
+              
+            }
             
             out.println("<p>등록 성공!</p>");
         } catch (Exception e) {
@@ -57,9 +64,6 @@ public class MemberAddServlet extends HttpServlet{
         out.println("</body>");
         out.println("</html>");
         
-        
+         
     }
-    
-    
-    
 }
