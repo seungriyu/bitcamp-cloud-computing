@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="member">
+  <!-- 컬럼명과 객체의 프로퍼티 명을 연결한다. -->
+  <resultMap type="Member" id="MemberMap"> <!-- type: 클래스 , id:   -->
+    <id column="mid" property="id"/> <!-- 프라이머리키는 id로 설정 -->
+    <result column="email" property="email"/>
+    <result column="pwd" property="password"/>
+  </resultMap>
+  <select id="selectList" resultMap="MemberMap" parameterType="map">
+  <!-- memberMap : 컬럼과 객체의 정보를 저장 ->> 이렇게하면 별명을 지정할 필요가 없다-->
+    select mid, email 
+    from pms2_member
+    <if test="startIndex != null and pageSize != null">
+    limit #{startIndex}, #{pageSize}
+    </if>
+  </select>
+  <select id="selectOne" resultMap="MemberMap" parameterType="string">
+    select mid ,email 
+    from pms2_member 
+    where mid=#{value} <!-- 파라미터로 넘어오는  -->
+  </select>
+  <update id="update" parameterType="member">
+    update pms2_member set 
+    email=#{email},
+    pwd = password(#{password}) 
+    where mid= #{id}
+  </update>
+  <delete id="delete" parameterType="string">
+    delete from pms2_member
+    where mid = #{value}
+  </delete>
+  <insert id="insert" parameterType="member">
+    insert into pms2_member(mid,email,pwd)
+     values(#{id},#{email},password(#{password}))
+  </insert>
+</mapper>

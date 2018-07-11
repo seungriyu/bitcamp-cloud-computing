@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
 import bitcamp.pms.dao.MemberDao;
 import bitcamp.pms.domain.Member;
 
@@ -30,8 +31,11 @@ public class MemberListServlet extends HttpServlet{
         
        
         try {
+            
             MemberDao memberDao = (MemberDao)getServletContext().getAttribute("memberDao");
+            System.out.println("set");
           List<Member> list =  memberDao.selectList();
+          System.out.println(list.get(0).getEmail());
           request.setAttribute("list", list);
           RequestDispatcher rd = request.getRequestDispatcher("/member/list.jsp");
           rd.include(request, response);

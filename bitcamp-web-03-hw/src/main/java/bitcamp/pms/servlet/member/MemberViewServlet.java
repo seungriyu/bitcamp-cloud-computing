@@ -33,7 +33,7 @@ public class MemberViewServlet extends HttpServlet{
         
         try {
             
-                MemberDao memberDao = (MemberDao)getServletContext().getAttribute("memberDao");
+            MemberDao memberDao = (MemberDao)getServletContext().getAttribute("memberDao");
                 Member member = memberDao.selectOne(id);
                 request.setAttribute("member", member);
                 RequestDispatcher rd = request.getRequestDispatcher("/member/view.jsp");

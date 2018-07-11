@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import bitcamp.pms.dao.MemberDao;
+import bitcamp.pms.domain.Board;
 import bitcamp.pms.domain.Member;
 
 
@@ -61,5 +62,6 @@ public class MemberAddServlet extends HttpServlet{
     }
     
     
+   
     
 }
