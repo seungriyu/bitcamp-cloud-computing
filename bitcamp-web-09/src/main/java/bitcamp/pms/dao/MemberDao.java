@@ -11,8 +11,11 @@ import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 
+import bitcamp.pms.annotation.Autowired;
+import bitcamp.pms.annotation.Repository;
 import bitcamp.pms.domain.Member;
 
+@Repository
 public class MemberDao {
     
 //    static {
@@ -26,6 +29,8 @@ public class MemberDao {
 //        
 //    }
     
+    public MemberDao() {}
+    
     SqlSessionFactory sqlSessionFactory;
     
     
@@ -33,7 +38,10 @@ public class MemberDao {
         this.sqlSessionFactory =  sqlSessionFactory;
     }
     
-    
+    @Autowired //sqlSessionFactory 찾아서 꼭 연결해줘
+    public void setSqlSessionFactory(SqlSessionFactory sqlSessionFactory) {
+        this.sqlSessionFactory = sqlSessionFactory;
+    }
     
     
     //인터페이스 List 
@@ -43,11 +51,12 @@ public class MemberDao {
         //반드시 닫아야 하는 자원 
         try (
             SqlSession sqlSession =sqlSessionFactory.openSession()){
-            System.out.println("123");
             return sqlSession.selectList("member.selectList" , params);
         }
     }
     
+
+
     public Member selectOne(String id) throws Exception{
         try (
                 SqlSession sqlSession =sqlSessionFactory.openSession()){

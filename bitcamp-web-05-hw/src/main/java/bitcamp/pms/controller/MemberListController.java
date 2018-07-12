@@ -1,4 +1,4 @@
-package bitcamp.pms.servlet.member;
+package bitcamp.pms.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -21,12 +21,22 @@ import javax.servlet.http.HttpServletResponse;
 import bitcamp.pms.dao.MemberDao;
 import bitcamp.pms.domain.Member;
 
-@SuppressWarnings("serial")
-@WebServlet("/member/list")
-public class MemberListServlet extends HttpServlet {
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+
+public class MemberListController implements PageController {
+    
+    MemberDao memberDao;
+    
+    
+    
+    public MemberListController(MemberDao memberDao) {
+        
+        this.memberDao = memberDao;
+    }
+
+
+
+    public String service(HttpServletRequest request, HttpServletResponse response)
+            throws Exception{
         // TODO Auto-generated method stub
         
         //페이징처리
@@ -39,28 +49,11 @@ public class MemberListServlet extends HttpServlet {
             params.put("pageSize", size);
             //시작인덱스 = page -1 * 3
         }
-        
-        
-        response.setContentType("text/html;charset=UTF-8");
-        
-
-        try {
-            // ServletContext sc = this.getServletContext();
-            // MemberDao가 필요하면 ServletContext에서 꺼내 서 사용
-            // 모든 Servlet이 공유
-
-            MemberDao memberDao = (MemberDao) getServletContext().getAttribute("memberDao");
-                
             List<Member> list = memberDao.selectList(params);
-            System.out.println(list.get(0).getId());
-            request.setAttribute("list", list);
-            request.setAttribute("view", "/member/list.jsp");
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            request.setAttribute("error", e);
             
-        }
+            request.setAttribute("list", list);
+            return "/member/list.jsp";
+
 
     }
 

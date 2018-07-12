@@ -43,7 +43,6 @@ public class MemberDao {
         //반드시 닫아야 하는 자원 
         try (
             SqlSession sqlSession =sqlSessionFactory.openSession()){
-            System.out.println("123");
             return sqlSession.selectList("member.selectList" , params);
         }
     }

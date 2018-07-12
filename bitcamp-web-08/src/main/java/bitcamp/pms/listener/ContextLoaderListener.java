@@ -14,12 +14,12 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import bitcamp.pms.controller.MemberAddController;
 import bitcamp.pms.controller.MemberDeleteController;
 import bitcamp.pms.controller.MemberListController;
-import bitcamp.pms.controller.MemberUpdateContorller;
+import bitcamp.pms.controller.MemberUpdateController;
 import bitcamp.pms.controller.MemberViewController;
 import bitcamp.pms.dao.MemberDao;
 
 
-@WebListener
+@WebListener //톰캣서버를 실행시킬때 최초로 실행된다.
 public class ContextLoaderListener implements ServletContextListener{
     @Override
     public void contextInitialized(ServletContextEvent sce) {
@@ -39,19 +39,17 @@ public class ContextLoaderListener implements ServletContextListener{
             //ContextLoaderListener 얘가 dao 만든는 애
             MemberDao memberDao = new MemberDao(sqlSessionFactory);
             
+//            MemberListController ctrl = new MemberListController(memberDao);
+           
             //서블릿이 사용가능 하도록 해야함
             ServletContext sc = sce.getServletContext();
-            
+            sc.setAttribute("/member/list", new MemberListController(memberDao));
             //ServletContext에 저장된 생태
 //            sc.setAttribute("memberDao", memberDao);
-            
-            sc.setAttribute("/member/list", new MemberListController(memberDao));
-            sc.setAttribute("/member/add", new MemberAddController(memberDao));
-            sc.setAttribute("/member/update", new MemberUpdateContorller(memberDao));
-            sc.setAttribute("/member/delete", new MemberDeleteController(memberDao));
             sc.setAttribute("/member/view", new MemberViewController(memberDao));
-            
-            
+            sc.setAttribute("/member/update", new MemberUpdateController(memberDao));
+            sc.setAttribute("/member/delete", new MemberDeleteController(memberDao));
+            sc.setAttribute("/member/add", new MemberAddController(memberDao));
             //톰캣 서버에 등록해야함 >> @WebListener
         }catch(Exception e){
             e.printStackTrace();
