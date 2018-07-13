@@ -18,6 +18,8 @@ public class ApplicationContext {
     HashMap<String,Object> objPool = new HashMap<>();
     
     public ApplicationContext(String packageName) throws Exception {
+        
+        //파일 이름을 .에서 /로 재배치 해라
         String filePath = packageName.replace('.', '/');
         
         /* 다음에서 사용할 Resources.getResourceAsFile()이 대충 다음과 같이 되어 있다는 것이다.
@@ -35,6 +37,7 @@ public class ApplicationContext {
         File dir = Resources.getResourceAsFile(filePath);
         
         findClass(dir, packageName);
+        
         injectDependency();
     }
     

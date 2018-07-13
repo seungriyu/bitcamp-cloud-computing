@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+  
+  <!-- @Autowired를 처리하려면 객체를 생성한 후 그 작업을 수행할 객체를 컨테이너에 등록해야 한다. 
+       등록해 두면 컨테이너가 사용할 것이다. -->
+<!--   <bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/> -->
+  
+<!--   <bean class="org.springframework.context.annotation.CommonAnnotationBeanPostProcessor"/> -->
+   
+   <!-- -->
+<!--    <context:annotation-config/> -->
+   <context:component-scan base-package="bitcamp.pms">
+    <context:exclude-filter type="regex" expression="bitcamp.pms.test.*"/> <!-- pms아래에있는 test는 무시한다! -->
+   </context:component-scan>
+   
+   <!-- sqlSessionFactory를 만들기 위해 먼저 sqlSessionFactoryBuilder를 만들자! -->
+   <bean id="sqlSessionFactoryBuilder" 
+         class="org.apache.ibatis.session.SqlSessionFactoryBuilder" /> <!-- 빌더를 먼저 만들자 -->
+   
+   
+   <!--sqlSessionFactory 만들기  -->
+   <!-- Object factory = sqlSessionFactoryBuilder.build();
+        iocContainer.put("sqlSessionFacotry",factory);
+    -->
+   <bean id="sqlSessionFactory" factory-bean="sqlSessionFactoryBuilder"
+         factory-method="build"><!-- 객체에 대해서 인스턴스 메서드를 호출해라! -->
+         <constructor-arg ref="inputStream"/><!-- 인스턴스를 넘길땐 ref, 9가지 넘길땐 value -->
+          <!-- build호출할때 inputStream 파라미터가 넘어간다 -->
+    </bean>
+    
+         
+   <!-- Object obj = Resources.getResourceAsStream("bitcamp...");
+        iocContainer.put("inputStream",obj);
+     -->
+   <bean id="inputStream" 
+         class="org.apache.ibatis.io.Resources"
+         factory-method="getResourceAsStream"><!-- 클래스에 대해서 스태틱 메서드를 호출해라 , 메서드가 리턴한 값을 inputStream으로 해라 -->
+         <constructor-arg value="bitcamp/pms/config/mybatis-config.xml"/> <!--  -->
+   </bean>
+   
+   
+</beans>

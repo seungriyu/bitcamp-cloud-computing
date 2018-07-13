@@ -14,8 +14,7 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import bitcamp.pms.context.ApplicationContext;
 
 @WebListener //톰캣서버를 실행시킬때 최초로 실행된다.
-public class ContextLoaderListener 
-    implements ServletContextListener {
+public class ContextLoaderListener implements ServletContextListener {
     
     @Override
     public void contextInitialized(ServletContextEvent sce) {
