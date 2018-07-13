@@ -21,7 +21,15 @@ public class ContextLoaderListener implements ServletContextListener {
         try {
             ClassPathXmlApplicationContext iocContainer = 
                     new ClassPathXmlApplicationContext("bitcamp/pms/config/application-context.xml");
-
+            
+            String [] names = iocContainer.getBeanDefinitionNames();
+            System.out.println("-------------------------------------------------------");
+            for(String name : names) {
+                System.out.printf("%s ==> %s\n" , name, iocContainer.getBean(name).getClass().getName());
+            }
+            System.out.println("-------------------------------------------------------");
+            
+            
 //            String resource = "bitcamp/pms/config/mybatis-config.xml";
           //FileInputStream in = new FileInputStream(c/ddd/ddd/ddd) >> 원래는 이렇게 하는데
             //Resources : 자바클래스에서 경로를 찾아줌 , InputStream 생성시켜줌 

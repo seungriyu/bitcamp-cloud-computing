@@ -3,7 +3,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd">
-
+    <!-- 객체 생성 -->
     <bean id="c1" class="bitcamp.java106.step01.Car">
         <property name="model" value="티코"/>
         <property name="maker" value="비트자동차"/>

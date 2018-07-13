@@ -33,7 +33,8 @@ public class MemberDao {
         this.sqlSessionFactory =  sqlSessionFactory;
     }
     
-    @Autowired //sqlSessionFactory 찾아서 꼭 연결해줘
+    //sqlSessionFactory 찾아서 꼭 연결해줘 , sqlSessionFactory가 없어도 호출안해도됨
+    @Autowired
     public void setSqlSessionFactory(SqlSessionFactory sqlSessionFactory) {
         this.sqlSessionFactory = sqlSessionFactory;
     }
