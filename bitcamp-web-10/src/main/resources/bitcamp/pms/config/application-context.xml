@@ -53,7 +53,7 @@
           - class 속성에 지정된 클래스가 FactoryBean 구현체라면, 그 객체를 만들어 저장하는 것이 아니라 
           - 그 객체의 getObject()를 호출하면 그 리턴 값을 저장한다. 
     -->
-    <!-- 공장 지정하기 -->
+    <!-- Bean 공장 지정하기 -->
    <bean id="sqlSessionFactory" class="bitcamp.pms.factory.SqlSessionFactoryBean"></bean>
    
 </beans>

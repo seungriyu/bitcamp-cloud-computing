@@ -38,10 +38,25 @@
  - 인터페이스를 구현하는 대신에 애노테이션으로 요청 핸들러를 표시하여 프론트 컨트롤러가 찾게 한다.
  - 이렇게 함으로써 페이지 컨트롤러를 맨들 때 특정 인터페이스에 종속되지 않게 한다.
 
-## web-09 : 객체 생성을 자동화하기 위해 IOC컨테이너를 만들기
+## web-09 : 객체 생성을 자동화하기 위해 IoC컨테이너를 만들기
 - IoC 컨테이너를 통해 페이지 컨트롤러의 객체를 자동 생성한다.
 - 페이지 컨트롤러의 의존 객체를 자동으로 주입한다.
 
 ## web-10 : Spring IoC 컨테이너 도입
 - 기존 직접 만든 IoC 컨테이너 대신에 스프링 컨테이너를 사용한다.
 
+## web-11 : Spring + Mybatis 연동
+- 기존에 직접 만든 SqlSessionFactoryBean 대신에 spring.Mybatis가 제공하는 SqlSessionFactoryBean을 사용한다.
+- DB 커넥션풀은 MyBatis대신에 Spring에서 관리한다.
+- 트랜잭션을 다룰 수 있도록 트랜잭션 관리자를 설정한다.
+- Proxy 패턴을 사용한 DAO 자동 생성 기능을 이용한다.
+
+## web-12 : Spring WebMVC의 ContextLoaderLIstener 사용하기
+- 기존에 직접 만든 ContextLoaderLIstener 대신에 Spring webMVC에서 제공하는 클래스를 사용한다.
+
+## web-13 : Spring WebMVC의 DispatcherServlet 사용하기
+- 기존에 직접 만든 DispatcherServlet 대신에 Spring WebMVC에서 제공하는 클래스를 사용한다.
+
+## web-14 : JSP 경로를 /WEB-INF/ 폴더 아래로 옮긴다.
+- /WEB-INF 폴더 아래로 JSP를 옮기면 클라이언트에서 직접 요청할 수 없다.
+- 이렇게 하면 JSP를 실행하기 위해 반드시 페이지 컨트롤러를 경유하도록 제한할 수 있다.

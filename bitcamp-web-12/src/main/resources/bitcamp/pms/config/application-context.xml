@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+  
+    <context:component-scan base-package="bitcamp.pms">
+    <context:exclude-filter type="regex" expression="bitcamp.pms.test.*"/> <!-- pms아래에있는 test는 무시한다! -->
+    </context:component-scan>
+    
+    
+    
+   
+   <!-- Mybatis에서 제공하는 공장 사용 -->
+   <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="mapperLocations" value="classpath*:bitcamp/pms/sql/**/*.xml" />
+        <property name="typeAliasesPackage" value="bitcamp.pms.domain"/> <!-- type별명에 대한 패키지, 별명을 자동 부여 -->
+    </bean>
+   
+   <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+	    <property name="driverClassName" value="${jdbc.driver}" />
+	    <property name="url" value="${jdbc.url}" />
+	    <property name="username" value="${jdbc.username}" />
+	    <property name="password" value="${jdbc.password}" />
+    </bean>
+    <!-- 트랜잭션 관리자 등록 -->
+    <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+    <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <!-- DAO 인터페이스로부터 DAO 구현제를 자동 생성하는 객체 등록 -->
+    <!-- DAO 구현체가 사용할 SQL 맵퍼 파일은 namespace 값으로 찾는다.
+                        따라서 인터페이스 명과 SQL 맵퍼의 namespace 값은 같아야 한다.
+                        또한 인터페이스의 메서드명과 SQL id는 같아야 한다.-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="bitcamp.pms.dao" />
+    </bean>
+    
+    <!-- .properties 파일을 읽어서 그 데이터를 보관할 객체를 등록한다. -->
+    <!-- Mybatis를 사용하지 않으면 property를 받아들일 객체를 만들어서 등록했어야함 -->
+     <context:property-placeholder location="classpath:bitcamp/pms/config/jdbc.properties"/>
+   
+</beans>
