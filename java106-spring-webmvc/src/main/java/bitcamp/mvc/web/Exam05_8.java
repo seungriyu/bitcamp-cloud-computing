@@ -24,8 +24,9 @@ public class Exam05_8 {
     public String m1(HttpServletResponse response) {
         try {
             Cookie c1 = new Cookie("name", 
-                URLEncoder.encode("홍길동", "UTF-8"));
-            
+//                    "길동" );
+                URLEncoder.encode("홍길", "UTF-8"));
+            //한글을 URLEncoding 
             Cookie c2 = new Cookie("age", "20"); 
             
             response.addCookie(c1);
@@ -53,6 +54,24 @@ public class Exam05_8 {
             throw new RuntimeException(e);
         }
     }
+    //최신 톰캣서버가 한글 처리해줌
+    @GetMapping(value="m3", produces="text/plain;charset=UTF-8")
+    @ResponseBody
+    public String m3(
+            // URL 인코딩된 쿠키 값을 받을 때는 Cookie 객체로 받아야 문자가 깨지지 않는다.
+            @CookieValue(value="name", defaultValue="") String name, 
+            
+            // URL 인코딩된 값이 아닌 경우에는 다음과 같이 특정 타입으로 바로 받아도 된다.
+            @CookieValue(value="age", defaultValue="0") int age) {
+        try {    
+            System.out.println(name);
+            return String.format("m2(): name=%s, age=%d", name, age);
+                
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+    
     
 }
 

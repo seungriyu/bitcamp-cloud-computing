@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-@Controller // 페이지 컨트롤러를 가리킬 때 보통 이 애노테이션을 붙인다.
+@Controller //페이지 컨트롤러를 가리킬 때 보통 이 애노테이션을 붙인다.
 @RequestMapping("/exam01_1/m1") // 요청 핸들러와 URL을 연결할 때 이 애노테이션을 붙인다.
 public class Exam01_1 {
     
