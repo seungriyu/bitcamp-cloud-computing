@@ -21,7 +21,7 @@
 	<p>해당 회원이 존재하지 않습니다.</p>
 	</c:when>
     <c:otherwise >
-    <form action='update' method='post'>
+    <form action='../update' method='post'>
     <table border='1'>
     <tr>
     <th>아이디</th>
@@ -37,9 +37,9 @@
     </tr>
     </table>
     <p>
-    <a href='list'>목록</a>
+    <a href='../list'>목록</a>
     <button>변경</button>
-    <a href='delete?id=${member.id}'>삭제</a>
+    <a href='../delete?id=${member.id}'>삭제</a>
     </p>
     </form>
      </c:otherwise>

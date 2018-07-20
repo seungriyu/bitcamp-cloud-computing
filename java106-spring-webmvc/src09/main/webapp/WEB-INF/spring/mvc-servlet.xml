@@ -22,6 +22,32 @@
          => JSP URL의 앞뒤 경로를 미리 설정해두면 페이지 컨트롤러에서 
             view URL을 지정하기 쉽다.  
     -->
+    
+    <mvc:annotation-driven enable-matrix-variables="true">
+      <mvc:message-converters>
+        <!-- HttpMessageConverter : Json-> 자바, 객체 -> Json 중간에 관여하여 바꿔줌 -->
+        <!-- new MappingJackson2HttpMessageConverter 객체를 만들어라 -->
+         <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+          <!-- setObejctMapper() -->
+          <property name="objectMapper">
+            <!-- 어떤 객체를 만드는데  new ObjectMapper() 만들어라-->
+             <bean class="com.fasterxml.jackson.databind.ObjectMapper">
+                <!-- setDateFormat() 을 호출해라 -->
+                <property name="dateFormat">
+                    <!-- new simpleDateFormat("yyyy-MM-dd") -->
+                    <bean class="java.text.SimpleDateFormat">
+                        <constructor-arg value="yyyy-MM-dd"/>
+                    </bean>
+                </property>
+             </bean>
+          </property>
+        </bean>
+      </mvc:message-converters>
+    </mvc:annotation-driven>
+    
+    
+    
+    
     <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 	    <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
 	    <property name="prefix" value="/WEB-INF/jsp/"/>

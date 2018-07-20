@@ -3,18 +3,41 @@
     xmlns:context="http://www.springframework.org/schema/context"
     xmlns:mvc="http://www.springframework.org/schema/mvc"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+     xmlns:aop="http://www.springframework.org/schema/aop"
     xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd
         http://www.springframework.org/schema/mvc
-        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd">
   
   <context:component-scan base-package="bitcamp.pms">
     <context:exclude-filter type="regex" expression="bitcamp.pms.test.*"/> <!-- pms아래에있는 test는 무시한다! -->
    </context:component-scan>
     <!-- Spring WebMVC 관련 애노테이션을 처리할 객체들을 등록한다. -->
-    <mvc:annotation-driven></mvc:annotation-driven>
+    <mvc:annotation-driven enable-matrix-variables="true"/>
+ 
+   <tx:annotation-driven transaction-manager="txManager"/>
+   <tx:advice id="txAdvice" transaction-manager="txManager">
+    <tx:attributes>
+        <tx:method name="get*" read-only="true"/>
+        <tx:method name="list*" read-only="true"/>
+        <tx:method name="*"/>
+    </tx:attributes>
+   </tx:advice>
+   
+   <aop:config>
+        <!-- 트랜잭션을 적용할 대상의 규칙을 선언 -->
+        <aop:pointcut id="ServiceOperation" expression="execution(* bitcamp.pms.service.*.*(..))"/>
+        
+        <!-- 대상에 대해 어떤 트랜잭션을 적용할 지 설정한다. -->
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="ServiceOperation"/>
+    </aop:config>
    
    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 	    <property name="dataSource" ref="dataSource"/>
@@ -44,4 +67,5 @@
         <property name="prefix" value="/WEB-INF/jsp/"/>
         <property name="suffix" value=".jsp"/>
      </bean>
+     
 </beans>
