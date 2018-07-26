@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>자바 스크립트</title>
+<style>
+img{
+    height: 80px;
+    
+}
+</style>
+<body></head>
+<h1>DOM API - 자식 태그 제거하기</h1>
+<div id="d1">
+<img alt="img1" src="../img/1.jpg">
+<img alt="img2" src="../img/2.jpg">
+<img alt="img3" src="../img/3.jpg">
+<img alt="img4" src="../img/4.jpg">
+<img alt="img5" src="../img/5.jpg">
+</div>
+
+<script>
+"use strict"
+    var tid = setInterval(() => {
+        var e = document.querySelector("#d1>img:first-child");
+	    
+        if(e==null){
+            clearInterval(tid);
+            return;
+        }
+	    //d1 태그에 막내 자식 태그를 추가한다.
+	    d1.removeChild(e); 
+	}, 2000);
+</script>
+</body>
+</html>
