@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>자바 스크립트</title>
+<style>
+    #resultDiv{
+        height: 200px;
+        border: 1px solid black;
+    }
+</style>
+
+
+<body></head>
+<h1>AJAX 동기요청 - 동기방식 계산기 구현</h1>
+<input id="iA" type="text" >
+<select id="iOp">
+    <option value="%2B">+</option>
+    <option>-</option>
+    <option>*</option>
+    <option>/</option>
+</select>
+<input id="iB" type="text" >
+<button id="btn1">버튼1</button><br>
+
+<div id="resultDiv"></div>
+<script>
+"use strict"
+   btn1.onclick= function(){
+       var xhr = new XMLHttpRequest();
+       xhr.open('GET','ex01-2.jsp?a='+iA.value+'&op='+iOp.value+'&b='+iB.value,false);
+       xhr.send();
+       console.log(xhr.responseText);
+       resultDiv.innerHTML = xhr.responseText;
+}
+     
+     
+</script>
+</body>
+</html>

@@ -10,7 +10,7 @@
 <span id="txt1">이벤트 발생시키기</span>
 
 <button id="btn1">버튼1</button>
-
+<button id="btn2">버튼2</button>
 <script>
 "use strict"
     
@@ -21,14 +21,17 @@
         var e = new MouseEvent("click");
         //2) 이벤트가 발생할 대상 객체에 대해 dispatchEvent()를 호출한다.
         //   dispatch : 이벤트를 배달하다!
-        btn1.dispatchEvent(e);
+        btn2.dispatchEvent(e);
     }
     
    btn1.onclick= function(event){
        console.log("버튼 눌렀음!");
     }
    
-    
+   btn2.onclick = function(event){
+       console.log("버튼2 누름 ㅇㅅㅇ")
+   }
+   
 </script>
 </body>
 </html>
