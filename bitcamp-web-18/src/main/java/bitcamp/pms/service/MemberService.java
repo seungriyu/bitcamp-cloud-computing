@@ -42,9 +42,9 @@ public class MemberService {
         //insert
         //delete
         
-        if(count != 100) {
-            throw new RuntimeException("예외발생~~~~~");
-        }
+//        if(count != 100) {
+//            throw new RuntimeException("예외발생~~~~~");
+//        }
         return count;
     }
 

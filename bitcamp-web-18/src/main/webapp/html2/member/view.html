@@ -23,11 +23,11 @@
 </p>
 </form>
 
-<script src="../js/bit.js"></script>
+<script src="../js/common.js"></script>
 <script>
 "use strict"
 var data = null;
-var {id, page, size} = $.parseQuery(location.href);
+var {id, page, size} = parseQuery(location.href);
 
 
 if (id == undefined) { // 입력 폼
