@@ -92,6 +92,29 @@ let bit = function(value){
        
     };
     
+    
+    el.css = function(name, value){
+        if(arguments.length ==1){
+            return el[0].style[name];
+        }
+        for(var e of el){
+            e.style[name] = value;
+        }
+        return el;
+    };
+    
+    el.val = function(value){
+        if(arguments.length == 0){
+            return el[0].value;
+        }
+        
+        for(var e of el){
+            e.value = value;
+        }
+        return el;
+    };
+    
+    
     return el;
    
 };
@@ -150,22 +173,30 @@ bit.ajax = function(url,settings){
         
     };
     
-    //settings에 서버로 보낼 data가 있다면 url에 포함해야 한다.
+    //settings에 서버로 보낼 data가 있다면 query string으로 만든다.
+    var qs = ''; 
     if(settings.data){ //세팅스에 데이터가 있다면
-        var qs = ''; 
         for(var propName in settings.data){
             qs += `&${propName}=${settings.data[propName]}`;
         }
+    }
+    
+    if(settings.method == 'GET'){
         
         if(url.indexOf('?') == -1)//?문자가 포함되지 않았다면 url뒤에다가 ?를 넣어라
             url += '?';
         url += qs; // 물음표 뒤에 그리고 qs 붙여라
+        xhr.open(settings.method , url, true);
+        xhr.send();
+    }else{
+        xhr.open(settings.method, url , true);
+        xhr.setRequestHeader('Content-Type', 
+        'application/x-www-form-urlencoded');
+        xhr.send(qs);
     }
     
-    console.log(url);
     
-    xhr.open(settings.method,url,true);
-    xhr.send();
+    
     
     //XMLHttpRequest 객체를 리턴하기 전에 함수를 추가한다.
     let done = null;
@@ -190,6 +221,42 @@ bit.getJSON = function(url, p2, p3){
     
     return bit.ajax(url,{
         dataType : 'json',
+        data : data,
+        success : success
+    });
+    
+}
+
+//제이쿼리 포스트 사용해보기
+bit.post = function(url, p2, p3, p4){
+    let data = {};
+    let success = null;
+    let dataType = 'text';
+    
+    if(arguments.length == 2){
+        if(typeof p3 == "function"){
+            data = p2;
+            success = p3;
+        }else if(typeof p2 == "function") {
+            success = p2; //p2가 함수가 아니라면 data에 p2넣기
+            dataType = p3;
+        }else{
+            data = p2;
+            dataType = p3;
+            
+        } 
+        
+    }else if (arguments.length > 2){
+        data = p2;
+        success = p3;
+        dataType = p4;
+        
+    }
+    
+    
+    return bit.ajax(url,{
+        method : 'POST',
+        dataType : dataType,
         data : data,
         success : success
     });

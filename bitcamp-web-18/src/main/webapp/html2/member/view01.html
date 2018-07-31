@@ -2,10 +2,10 @@
 <html>
 <head>
 <meta charset='UTF-8'>
-<title>멤버 보기ㅇㄷㅇㄷㅇㄷㅇ</title>
+<title>멤버 보기</title>
 </head>
 <body>
-<h1>멤버 보기ㅐ애</h1>
+<h1>멤버 보기3</h1>
 <form>
 <table border='1'>
 <tr><th>아이디</th><td>
@@ -23,65 +23,91 @@
 </p>
 </form>
 
-<script src="../js/bit.js"></script>
+<script src="../js/common.js"></script>
 <script>
 "use strict"
 var data = null;
-var {id, page, size} = $.parseQuery(location.href);
+var {id, page, size} = parseQuery(location.href);
 
 
 if (id == undefined) { // 입력 폼
-    $('.viewform').css('display','none');
-    $(eId).removeAttr("readonly");
-
+    var el = document.querySelectorAll('.viewform') //el element list
+    for(var e of el){
+        e.style.display = 'none';
+    }
+    eId.removeAttribute("readonly");
+    
+    
+    
+    
 } else { //상세 보기 폼
     
-    $('.newform').css('display','none');
-    $.getJSON(`../../json/member/view/${id}`,
-     function(result){
-            
-	    
-	        data = result;
-	        if (data.member == null) {
-	            alert('아이디가 무효합니다.');
-	            location.href = "list.html";
-	            return;
-	        }
-	        $(eId).val(data.member.id);
-	        $(eEmail).val(data.member.email);
-     });
+    var el = document.querySelectorAll('.newform') //el element list
+    for(var e of el){
+        e.style.display = 'none';
+    }
     
-};
     
-
-$(eListBtn).click(function() {
+    
+    var xhr = new XMLHttpRequest();
+    
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState < 4) return;
+        if (xhr.status !== 200) {
+            alert('서버에서 오류 발생!');
+            return;
+        }
+        data = JSON.parse(xhr.responseText);
+        if (data.member == null) {
+            alert('아이디가 무효합니다.');
+            location.href = "list.html";
+            return;
+        }
+        eId.value = data.member.id;
+        eEmail.value = data.member.email;
+    };
+    
+    xhr.open('GET', 
+            `../../json/member/view/${id}`, 
+            true);
+    xhr.send();
+}
+eListBtn.onclick = function() {
     if(page){
         location.href = `list.html?page=${page}&size=${size}`;
     }else{
         location.href = 'list.html';
     }
-});
-
-$(eUpdateBtn).click(function() {
-    $.post('../../json/member/update2',
-        {
-             id:$(eId).val(), 
-             email: $(eEmail).val(), 
-             password:$(ePassword).val()
-         },
-        function(data){
-	        if (data.status == 'success') {
-	            location.href = `list.html?page=${page}&size=${size}`;
-	        } else {
-	            alert('변경 오류입니다!');
-	            console.log(data.error);
-	        }
-        },
-        'josn');
-        
-    });
-});
-
+    
+    
+    
+    
+    
+    
+};
+eUpdateBtn.onclick = function() {
+    var xhr = new XMLHttpRequest();
+    
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState < 4) return;
+        if (xhr.status !== 200) {
+            alert('서버에서 오류 발생!');
+            return;
+        }
+        let data = JSON.parse(xhr.responseText);
+        if (data.status == 'success') {
+            location.href = `list.html?page=${page}&size=${size}`;
+        } else {
+            alert('변경 오류입니다!');
+            console.log(data.error);
+        }
+    };
+    
+    xhr.open('POST', '../../json/member/update', true);
+    xhr.setRequestHeader('Content-Type', 
+            'application/x-www-form-urlencoded');
+    xhr.send(`id=${eId.value}&email=${eEmail.value}&password=${ePassword.value}`);
+};
 eDeleteBtn.onclick = function() {
     var xhr = new XMLHttpRequest();
     

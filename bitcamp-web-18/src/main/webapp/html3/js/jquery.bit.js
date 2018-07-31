@@ -1,5 +1,5 @@
 
-function parseQuery(url) {
+$.parseQuery = function(url) {
     var paramMap = {};
 
     var qs = url.split('?');
@@ -11,4 +11,4 @@ function parseQuery(url) {
         }
     }
     return paramMap;
-}
+};
