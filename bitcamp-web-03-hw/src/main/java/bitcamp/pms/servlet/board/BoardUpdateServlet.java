@@ -12,6 +12,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import bitcamp.pms.dao.BoardDao;
+import bitcamp.pms.domain.Board;
+import bitcamp.pms.domain.Member;
+
 
 @SuppressWarnings("serial")
 @WebServlet("/board/update")
@@ -40,30 +44,27 @@ public class BoardUpdateServlet extends HttpServlet{
         
         try {
             
-            Class.forName("com.mysql.jdbc.Driver");
-            try (
-                Connection con = DriverManager.getConnection(
-                    "jdbc:mysql://13.209.76.8:3306/studydb",
-                    "study", "1111");
-                PreparedStatement stmt = con.prepareStatement(
-                    "update pms2_board set titl=?, cont=?, cdt=now() where bno=?");) {
-                
-                stmt.setString(1, title);
-                stmt.setString(2, content);
-                stmt.setInt(3, no);
-                
-                
-                if (stmt.executeUpdate() == 0) {
+
+            BoardDao boardDao = (BoardDao)getServletContext().getAttribute("boardDao");
+            Board board = new Board();
+                board.setBno(Integer.parseInt(request.getParameter("no")));
+                board.setContent(request.getParameter("content"));
+                board.setTitl(request.getParameter("title"));
+                if (boardDao.update(board)== 0) {
                     out.println("<p>해당 게시물이 존재하지 않습니다.</p>");
                 } else {
                     out.println("<p>변경하였습니다.</p>");
                 }
-            }
+            
         } catch (Exception e) {
             out.println("<p>변경 실패!</p>");
             e.printStackTrace(out);
         }
         out.println("</body>");
         out.println("</html>");
+        
+        
+        
     }
+    
 }

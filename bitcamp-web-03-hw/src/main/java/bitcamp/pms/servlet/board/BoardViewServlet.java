@@ -13,19 +13,22 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import bitcamp.pms.dao.BoardDao;
+import bitcamp.pms.domain.Board;
 
 @SuppressWarnings("serial")
 @WebServlet("/board/view")
-public class BoardViewServlet extends HttpServlet{
+public class BoardViewServlet extends HttpServlet {
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         int no = Integer.parseInt(request.getParameter("no"));
-       
+
         System.out.println(no);
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        
+
         out.println("<!DOCTYPE html>");
         out.println("<html>");
         out.println("<head>");
@@ -36,44 +39,35 @@ public class BoardViewServlet extends HttpServlet{
         out.println("<h1>게시물 보기</h1>");
         out.println("<form action='update' method='post'>");
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            try (
-                Connection con = DriverManager.getConnection(
-                        "jdbc:mysql://13.209.76.8:3306/studydb",
-                        "study", "1111");
-                PreparedStatement stmt = con.prepareStatement(
-                    "select bno,titl,cont,cdt from pms2_board where bno=?");) {
+            
                 
-                stmt.setInt(1, no);
+            BoardDao boardDao = (BoardDao)getServletContext().getAttribute("boardDao");
+//            Board board = new Board();
+//                board.setBno(Integer.parseInt(request.getParameter("bno")));
+                Board board = boardDao.selectOne(no);
                 
-                try (ResultSet rs = stmt.executeQuery();) {
-                    if (!rs.next()) 
+                    if (board == null)
                         throw new Exception("유효하지 않은 게시물 번호입니다.");
                     else {
-                        
+
                         out.println("<table border='1'>");
                         out.println("<tr><th>번호</th><td>");
-                        out.printf("    <input type='text' name='no' value='%d' readonly></td></tr>\n", 
-                                rs.getInt("bno"));
+                        out.printf("    <input type='text' name='no' value='%d' readonly></td></tr>\n",
+                                board.getBno());
                         out.println("<tr><th>제목</th>");
                         out.printf("    <td><input type='text' name='title' value='%s'></td></tr>\n",
-                                rs.getString("titl"));
+                                board.getTitl());
                         out.println("<tr><th>내용</th>");
                         out.printf("    <td><textarea name='content' rows='10' cols='60'>%s</textarea></td></tr>\n",
-                                rs.getString("cont"));
-                        out.printf("<tr><th>등록일</th><td>%s</td></tr>\n", 
-                                rs.getDate("cdt"));
+                                board.getTitl());
+                        out.printf("<tr><th>등록일</th><td>%s</td></tr>\n", board.getCdt());
                         out.println("</table>");
-                        
+
                     }
-                    
-                }
-            }
+
+                
             
-            
-            
-            
-            
+
         } catch (Exception e) {
             out.printf("<p>%s</p>\n", e.getMessage());
             e.printStackTrace(out);
@@ -86,6 +80,7 @@ public class BoardViewServlet extends HttpServlet{
         out.println("</form>");
         out.println("</body>");
         out.println("</html>");
-        
+
     }
+
 }
