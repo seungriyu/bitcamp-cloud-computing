@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,14 +18,18 @@ import bitcamp.pms.dao.MemberDao;
 import bitcamp.pms.domain.Member;
 import bitcamp.pms.service.MemberService;
 
+//@CrossOrigin
 @RestController
 @RequestMapping("/member")
 public class MemberController {
 
     @Autowired MemberService memberService;
-
+    
+    
     // protected -> public 규칙은 공개되어야함
     // 프론트 컨트롤러에 요청 >> 이 메서드 요청하라고
+  //CrossOrigin: 다른 모든 클라이언트에게 요청을 허락한다!!!!!
+    //@CrossOrigin
     @RequestMapping("/list")
     public Object list(@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "3") int size) throws Exception
 

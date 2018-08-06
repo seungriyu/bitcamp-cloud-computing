@@ -1,0 +1,1 @@
+var serverApiAddr = "http://192.168.0.25:8080/bitcamp-web-18";
