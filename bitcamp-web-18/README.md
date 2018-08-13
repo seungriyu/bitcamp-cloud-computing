@@ -56,3 +56,10 @@ Phonegap을 이용하여 모바일 웹앱 만들기
 모바일 웹 앱은 앱 안에 웹 브라우저 컴포넌트를 삽입하여 
 -
 
+###html7
+템플릿 엔진 적용하여 HTML 태그를 생성한다.
+-handlebars 라이브러리 가져오기
+  - 'npm install handlebars --save'
+-HTML 페이지 라이브러리 삽입
+  -<script src = '...'></scripte>
+-자바스크립트에 적용하기
