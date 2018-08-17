@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>명함관리</title>
+<link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css" >
+<link rel="stylesheet" href="../css/common2.css">
+<style>
+    
+    section{
+        border:1px solid red;
+        box-sizing: border-box; /*content 상관 없이 box 사이즈로 */
+    }
+    section#content{
+        min-height: 400px; /*내용이 없더라도 최소 400px */
+         overflow: hidden; /*자식의 크기에 따라 부모의 높이가 결정됨*/
+    }
+    
+    
+    section#list{
+        float:left;
+        width:150px;
+    }
+    section#detail{
+        float:left;
+        width:500px;
+    }
+    
+   
+</style>
+</head>
+<body>
+<div class="container">
+
+<header></header>
+
+
+<section id="content">
+
+<section id="list">
+
+</section>
+
+<section id="detail">
+</section>
+
+</section><!-- #content -->
+
+
+<footer></footer>
+
+
+</div><!-- .container -->
+
+<script src="../node_modules/jquery/dist/jquery.min.js"></script>
+<script src="../node_modules/popper.js/dist/umd/popper.min.js" ></script>
+<script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="../js/jquery.bit.js"></script>
+<script src="../js/common2.js"></script>
+<script src="index.js"></script>
+</body>
+</html>

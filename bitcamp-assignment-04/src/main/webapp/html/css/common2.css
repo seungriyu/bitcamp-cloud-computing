@@ -1,0 +1,59 @@
+@charset "UTF-8";
+
+body{
+	font-size:small;
+	
+	
+}
+
+div {
+/* 	border:  1px solid red; */
+/* 	padding: 5px; */
+    box-sizing: border-box; /*box사이즈는 border를 기준으로 하겠다!*/
+}
+/*우선순위가 더 높기 때문에 div.container가 적용된다.*/ 
+div.container{
+	
+    width:700px;
+ 
+}
+
+.container > header{
+	 border-bottom: 1px solid gray;
+     height: 60px;
+      
+}
+
+.container > header #app-name{
+	float: left;
+	font-size: 30px;
+	font-weight: bold;
+}
+
+.container > header a {
+	float:right;
+}
+
+
+
+.container > footer{
+	position: relative;
+	height: 20px;
+	font-size:80%;
+}
+
+.container > footer  a{
+/* 	border: 3px solid gray; */
+	position: absolute;
+	left: 0px;
+	top:0px;
+	
+}
+
+.container > footer  #copyright{
+/* 	border: 3px solid gray; */
+	position: absolute;
+	right: 0px;
+	top: 0px;
+	
+}

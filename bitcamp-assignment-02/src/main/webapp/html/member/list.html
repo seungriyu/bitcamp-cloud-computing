@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>명함 목록</title>
+<link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.min.css" >
+<style type="text/css">
+body{
+    margin:0;
+    padding:0;
+}
+#memberList{
+    overflow: hidden;
+    position: relative;
+    background: ;
+    width: 978px;
+    height: 600px;
+    margin: 0 auto;
+    -webkit-transform: translate3d(0,0,0);
+    transform: translate3d(0,0,0);
+}
+
+[data-text-content] {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    white-space: pre-wrap;
+    word-break: break-all;
+    font-family: HanSans;
+}
+
+#ntitle {
+    font-weight: normal;
+    font-size: 24px;
+    line-height: 1.4em;
+}
+#nlogout{
+    font-size: 16px;
+    color: rgb(41, 90, 221);
+    text-decoration: underline;
+    text-align: right;
+}
+#nline1{
+    position: absolute;
+    top: 48px;
+    left: 69.5px;
+    width: 839px;
+    height: 20px;
+}
+
+#nline2{
+    border-left: solid #e6e6e6;
+    position: absolute;
+    top: 75px;
+    left: 271px;
+    width: 20px;
+    height: 450px;
+}
+#nline3{
+    position: absolute;
+    top: 532px;
+    left: 69.5px;
+    width: 839px;
+    height: 20px;
+}
+#box1{
+    position: absolute;
+    width: 200px;
+    height: 450px;
+    top: 55px;
+    left: 69.5px;
+}
+#nsearch{
+   padding: 6px 12px;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    box-sizing: border-box;
+    resize: none;
+    font-size: 14px;
+
+}
+</style>
+</head>
+<body>
+<div id="memberList">
+    <div data-text-content="true" id="ntitle">개인 명함 관리</div>
+    <div data-text-content="true" id="nlogout">로그아웃</div>
+    <div id="nline1">
+        <div style="border: 1px solid #e6e6e6;" ></div>
+    </div>
+    
+    <div id="box1">
+        <div style="padding:15px;">
+            <input type="text" value="검색" id="nsearch" >
+        </div>
+        <table id="eListTable">
+	        <tbody>
+	            
+	        </tbody>
+        </table>
+	      <div >
+		  <button id="ePrevBtn" class="btn btn-outline-secondary btn-sm">이전</button>
+		  <span id="ePageNo"></span> 
+		  <button id="eNextBtn" class="btn btn-outline-secondary btn-sm">다음</button>
+		  </div>
+    </div>
+    
+   
+    
+  
+ 
+    
+    
+    <div id="nline2">
+        <div></div>
+    </div>
+    <div id="nline3">
+        <div style="border: 1px solid #e6e6e6;" ></div>
+    </div>
+</div>
+
+<script type="text/x-handlebars-template" id="tr-template-src">
+    {{#each list}}
+        <tr>
+            <td>
+                {{name}}
+            </td>
+        </tr>
+    {{/each}}
+</script>
+
+<script src="../../node_modules/handlebars/dist/handlebars.min.js"></script>
+<script src="../../node_modules/jquery/dist/jquery.min.js"></script>
+<script src="../../node_modules/popper.js/dist/umd/popper.min.js" ></script>
+<script src="../../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="list.js"></script>
+</body>
+</html>

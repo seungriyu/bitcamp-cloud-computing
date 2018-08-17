@@ -11,7 +11,8 @@ plugins {
     //web archive 관련 빌드 명령을 추가해야 한다.
     id 'war'
 }
-    compileJava {
+
+compileJava {
         options.encoding = "UTF-8"
     }
 
