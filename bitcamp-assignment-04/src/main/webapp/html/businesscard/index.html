@@ -25,7 +25,23 @@
         float:left;
         width:500px;
     }
+    #list{
+        border: 2px solid green;
+        float:left;
+        width: 150px;
+        padding:10px;
+    }
+    #list input {
+        width:100%;
+    }
+    #list > article:first-child{
+        margin-bottom: 20px;
+    }
     
+   #form{
+    border: 2px solid blue;
+    margin-left: 150px;
+   }
    
 </style>
 </head>
@@ -41,7 +57,7 @@
 
 </section>
 
-<section id="detail">
+<section id="form">
 </section>
 
 </section><!-- #content -->
@@ -52,6 +68,7 @@
 
 </div><!-- .container -->
 
+<script src="../node_modules/handlebars/dist/handlebars.min.js"></script>
 <script src="../node_modules/jquery/dist/jquery.min.js"></script>
 <script src="../node_modules/popper.js/dist/umd/popper.min.js" ></script>
 <script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
