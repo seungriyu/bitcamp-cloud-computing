@@ -11,7 +11,7 @@ public class BusinessCard implements Serializable{
     protected String name;
     protected String mobileTel;
     protected String tel;
-    protected String tax;
+    protected String fax;
     protected String email;
     protected String memo;
     
@@ -45,11 +45,11 @@ public class BusinessCard implements Serializable{
     public void setTel(String tel) {
         this.tel = tel;
     }
-    public String getTax() {
-        return tax;
+    public String getFax() {
+        return fax;
     }
-    public void setTax(String tax) {
-        this.tax = tax;
+    public void setFax(String fax) {
+        this.fax = fax;
     }
     public String getEmail() {
         return email;
@@ -63,12 +63,13 @@ public class BusinessCard implements Serializable{
     public void setMemo(String memo) {
         this.memo = memo;
     }
-    
     @Override
     public String toString() {
         return "BusinessCard [no=" + no + ", memberNo=" + memberNo + ", name=" + name + ", mobileTel=" + mobileTel
-                + ", tel=" + tel + ", tax=" + tax + ", email=" + email + "]";
+                + ", tel=" + tel + ", fax=" + fax + ", email=" + email + ", memo=" + memo + "]";
     }
+    
+    
     
     
 }

@@ -36,8 +36,3 @@ function loadList(){
         
     }) //name-list가 없는 상태에서 list를 실행하라고 하니까 안뜸
 }
-
-//var liTemplateSrc = $('#li-template').text();
-//var template = Handlebars.compile(liTemplageSrc);
-//
-//$('#name-list').on('c')
