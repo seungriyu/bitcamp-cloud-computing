@@ -12,10 +12,10 @@ let bit = function(value){
             el[i] = list[i];
         }
     }
-    //개발자가 쓰기 좋은 함수를 추가해서 리턴하자!
+    // 개발자가 쓰기 좋은 함수를 추가해서 리턴하자!
     el.html = function(value){
         if(arguments.length ==0){
-            return el[0].innerHTML; //값을 리턴하라!
+            return el[0].innerHTML; // 값을 리턴하라!
         }
         for(var e of el)
             e.innerHTML = value;
@@ -28,12 +28,13 @@ let bit = function(value){
     };
     el.appendTo = function(parent){
         for(var e of el)
-            parent[parent.length -1].appendChild(e);//parent의 막내 부모에 appendChild를 추가
+            parent[parent.length -1].appendChild(e);// parent의 막내 부모에
+													// appendChild를 추가
         return el;
     };
     el.attr = function(name,value){
-        if(arguments.length <2){ //아규먼트가 1개라면 
-            return el[0].getAttribute(name); //그 속성의 값을 줘라!
+        if(arguments.length <2){ // 아규먼트가 1개라면
+            return el[0].getAttribute(name); // 그 속성의 값을 줘라!
         }
         for(var e of el)
             e.setAttribute(name, value);
@@ -56,22 +57,22 @@ let bit = function(value){
         }
         for(var e of el) {
             if(!selector){ 
-                //selector가 지정되어 있지 않으면,
-                //해당 태그에 대해 이벤트가 발생했을 때 핸들러를 호출한다.
-                //ex) 이전 , 다음
+                // selector가 지정되어 있지 않으면,
+                // 해당 태그에 대해 이벤트가 발생했을 때 핸들러를 호출한다.
+                // ex) 이전 , 다음
                 e.addEventListener(name,handler);
             }else{
-                //selector가 지정되어 있으면
-                //핸들러를 호출하기 전에 selector에 해당하는 것인지 검사하는 함수가 먼저 호출되게 한다.
+                // selector가 지정되어 있으면
+                // 핸들러를 호출하기 전에 selector에 해당하는 것인지 검사하는 함수가 먼저 호출되게 한다.
                 e.addEventListener(name, function(event){
-                    //selectorTargets : 클릭하는 시점에 찾는다.
-                    //현재 태그의 자식 태그 중에서 selector 조건에 해당되는 자식 태그들을 찾는다.
+                    // selectorTargets : 클릭하는 시점에 찾는다.
+                    // 현재 태그의 자식 태그 중에서 selector 조건에 해당되는 자식 태그들을 찾는다.
                     var selectorTargets = e.querySelectorAll(selector); 
                     
-                    //그 자식 태그들 중에 이 이벤트가 발생된 태그를 찾는다.
+                    // 그 자식 태그들 중에 이 이벤트가 발생된 태그를 찾는다.
                     for(var target of selectorTargets){
-                        //만약 이벤트가 발생된 태그와 일치하는 자식 태그가 있다면, 
-                        //그때서야 핸들러를 호출해준다.
+                        // 만약 이벤트가 발생된 태그와 일치하는 자식 태그가 있다면,
+                        // 그때서야 핸들러를 호출해준다.
                         if (event.target == target){
                             handler(event);
                             break;
@@ -139,7 +140,7 @@ bit.ajax = function(url,settings){
     if(settings == undefined)
         settings = {};
     if(settings.dataType == undefined) 
-        settings.dataType = 'text'; //서버에서 리턴한 걸 그대로 리턴해 !
+        settings.dataType = 'text'; // 서버에서 리턴한 걸 그대로 리턴해 !
     if(settings.method == undefined)
         settings.dataType = 'GET';
     
@@ -149,7 +150,7 @@ bit.ajax = function(url,settings){
         if (xhr.readyState < 4) return;
         if (xhr.status !== 200) {
             if(settings.error)
-                erro(); //에러라는 함수가 정의되어 있따면 호출
+                erro(); // 에러라는 함수가 정의되어 있따면 호출
             return;
         }
         
@@ -157,15 +158,16 @@ bit.ajax = function(url,settings){
         
         if(settings.dataType=='json');{
             data = JSON.parse(xhr.responseText);
-            //json이라면 객체로 파싱해서 넣어야함
+            // json이라면 객체로 파싱해서 넣어야함
         }
-        if(settings.success){//settings라는 객체 안에 성공했을때 호출될 success가 있다면 , 데이타 타입이
+        if(settings.success){// settings라는 객체 안에 성공했을때 호출될 success가 있다면 , 데이타
+								// 타입이
             
             settings.success(data);
             
             
         }
-        //done()에 의해 등록된  함수가 등록되어 있다면, 그 함수를 호출한다.
+        // done()에 의해 등록된 함수가 등록되어 있다면, 그 함수를 호출한다.
         
         if(done){
             done(data);
@@ -173,9 +175,9 @@ bit.ajax = function(url,settings){
         
     };
     
-    //settings에 서버로 보낼 data가 있다면 query string으로 만든다.
+    // settings에 서버로 보낼 data가 있다면 query string으로 만든다.
     var qs = ''; 
-    if(settings.data){ //세팅스에 데이터가 있다면
+    if(settings.data){ // 세팅스에 데이터가 있다면
         for(var propName in settings.data){
             qs += `&${propName}=${settings.data[propName]}`;
         }
@@ -183,7 +185,7 @@ bit.ajax = function(url,settings){
     
     if(settings.method == 'GET'){
         
-        if(url.indexOf('?') == -1)//?문자가 포함되지 않았다면 url뒤에다가 ?를 넣어라
+        if(url.indexOf('?') == -1)// ?문자가 포함되지 않았다면 url뒤에다가 ?를 넣어라
             url += '?';
         url += qs; // 물음표 뒤에 그리고 qs 붙여라
         xhr.open(settings.method , url, true);
@@ -198,7 +200,7 @@ bit.ajax = function(url,settings){
     
     
     
-    //XMLHttpRequest 객체를 리턴하기 전에 함수를 추가한다.
+    // XMLHttpRequest 객체를 리턴하기 전에 함수를 추가한다.
     let done = null;
     xhr.done = function(func){
         done = func;
@@ -213,8 +215,8 @@ bit.getJSON = function(url, p2, p3){
     let success = null;
     
     if(arguments.length> 1){
-        if(typeof p2 == "function") success = p2; //p2가 함수가 아니라면 data에 p2넣기 
-        else data =p2;//만약 p2가 함수라면 success 에 p2넣기
+        if(typeof p2 == "function") success = p2; // p2가 함수가 아니라면 data에 p2넣기
+        else data =p2;// 만약 p2가 함수라면 success 에 p2넣기
         if(typeof p3 == "function") success = p3;
     
     }
@@ -227,7 +229,7 @@ bit.getJSON = function(url, p2, p3){
     
 }
 
-//제이쿼리 포스트 사용해보기
+// 제이쿼리 포스트 사용해보기
 bit.post = function(url, p2, p3, p4){
     let data = {};
     let success = null;
@@ -238,7 +240,7 @@ bit.post = function(url, p2, p3, p4){
             data = p2;
             success = p3;
         }else if(typeof p2 == "function") {
-            success = p2; //p2가 함수가 아니라면 data에 p2넣기
+            success = p2; // p2가 함수가 아니라면 data에 p2넣기
             dataType = p3;
         }else{
             data = p2;
@@ -264,6 +266,6 @@ bit.post = function(url, p2, p3, p4){
 }
 
 
-let $ = bit; //bit나 $나 같은 객체를 가리킨다.
+let $ = bit; // bit나 $나 같은 객체를 가리킨다.
 
 
